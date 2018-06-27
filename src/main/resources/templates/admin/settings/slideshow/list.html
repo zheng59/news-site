@@ -51,6 +51,9 @@
                     <a class="" href="javascript:;">相关设置</a>
                     <dl class="layui-nav-child">
                         <dd class="layui-this" ><a href="/admin/settings/slideshow/list.html">幻灯片设置</a></dd>
+                        <dd><a href="/admin/settings/slideshow/edit.html">添加幻灯片</a></dd>
+                        <dd><a href="/admin/admission/list.html">证件列表</a></dd>
+                        <dd><a href="/admin/admission/edit.html">添加证件</a></dd>
                         <dd><a href="/admin/link/text.html">文字链接</a></dd>
                     </dl>
                 </li>
@@ -63,7 +66,7 @@
         <div style="padding: 15px;">
             <h3>轮播图管理</h3>
             <hr class="layui-bg-red">
-            <a class="layui-btn" href="/admin/settings/slideshow/edit.html">添加<a/>
+            <a class="layui-btn" href="/admin/settings/slideshow/edit.html">添加</a>
             <hr class="layui-bg-red" >
             <div class="layui-col-md12">
                 <table class="layui-table">
@@ -179,7 +182,7 @@
                     layer.msg('关键词或url不能为空');
                     return;
                 }
-                let body = {
+                var body = {
                     text:word,
                     url:url
                 }

@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * SecurityConfig
  * zheng
  **/
-@Configuration
+//@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
-                .and().formLogin().defaultSuccessUrl("/admin/news/list")
+                .and().formLogin().defaultSuccessUrl("/admin")
                 .and().csrf().disable();
     }
 }

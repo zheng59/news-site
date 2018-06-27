@@ -4,6 +4,8 @@ package com.zheng.news.model;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
+import static javax.persistence.ConstraintMode.NO_CONSTRAINT;
+
 /**
  * 新闻类
  * zheng
@@ -23,7 +25,7 @@ public class News {
     private ZonedDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name="null"))
+    @JoinColumn(foreignKey = @ForeignKey(NO_CONSTRAINT))
     private NewsCategory category;
 
     private NewsStatus status;
