@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>添加文章</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <link href="/layui/css/layui.css" rel="stylesheet" media="screen">
+    <link href="/css/font-awesome.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/wangEditor/wangEditor.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/layui/layui.js"></script>
+    <script src="/wangEditor/wangEditor.js"></script>
+</head>
+
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:">文章</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/admin/news/list.html">所有文章</a></dd>
+                        <dd><a href="/admin/news/add.html">添加文章</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">相关设置</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">banner</a></dd>
+                        <dd><a href="/admin/link/text.html">文字链接</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <h3>文章添加</h3>
+            <hr class="layui-bg-red">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" id="title" placeholder="请输入标题" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否公开</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="status" value="DRAFT" title="草稿">
+                            <input type="radio" name="status" value="PUBLISHED" title="发布">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分类</label>
+                        <div class="" >
+                            <div style="display: inline-block" class="category-parant" id="catetory">
+
+                            </div>
+                            <a href="##" class="toggle-add-category ml-20"> + 添加新分类目录</a>
+                        </div>
+                        <div>
+                            <div id="category-add" class="category-add-detail" style="display: none">
+                                <input type="text" name="newcategory" id="newcategory" class="layui-input mb-10"
+                                       placeholder="请输入分类名">
+                                <div id="newcategory_dom">
+
+                                </div>
+                                <button class="layui-btn mt-10 mb-10" id="addCategoryBtn">添加新分类目录</button>
+                            </div>
+                        </div>
+                        <!--显示二级分类地址-->
+                        <!--<div>-->
+                            <!--<section class="category-two" style="display: none;">-->
+                                <!--<input type="radio" name="category-two" value="1" tit   le="二级分类" lay-skin="primary">-->
+                                <!--<input type="radio" name="category-two" value="2" title="二级分类" lay-skin="primary">-->
+                            <!--</section>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">文本内容</label>
+                    <div class="layui-input-block">
+                        <div id="editor"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" id="sumbit" lay-submit lay-filter="formDemo">保存</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+</body>
+<script>
+    //
+    $(function () {
+
+
+
+
+
+        var form = null
+        layui.use(['layer', 'form', 'element'], function () {
+            var layer = layui.layer
+                , form = layui.form;
+            var element = layui.element;
+
+            var id = window.location.search.split('=')[1];
+            // console.log(window.location.search,'=====');
+            var timeCount= 0;
+            var initData = {};
+            $.ajax({
+                url: "/admin/news/" + id,
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                async:false,
+                success:function (result) {
+                    initData = result;
+                    $('#title').val(initData.title || 0);
+                    $('[name=status]').filter('[value=' + initData.status +']').prop('checked', true);
+                    // console.log(result,'resultresultresult====')
+                }
+            })
+
+
+            // 刷新分类
+            reloadCategory(form);
+
+            // 初始化编辑器
+            var E = window.wangEditor
+            var editor = new E('#editor')
+            editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+            editor.create();
+            if(initData.content){
+                editor.txt.html(initData.content)
+            }
+
+
+            // 隐藏添加分类弹窗
+            $('.toggle-add-category').click(function () {
+                $('#category-add').toggle();
+                $('.category-two').hide();
+            })
+
+            // 监听点击一级分类事件
+            // $('[name=category]').on('click', function () {
+            //     console.log('111');
+            //     $('.category-two').toggle()
+            // })
+
+            $('#addCategoryBtn').on('click', function (e) {
+                e.preventDefault();
+                addCategory();
+            })
+
+            // 提交文章内容
+            $('#sumbit').on('click', function (e) {
+                e.preventDefault();
+                let body = {};
+                body.title = $('#title').val();
+                body.status = $('[name=status]:checked').val();
+                body.category={}
+                body.category.id = $('[name=category]').val();
+                body.content = editor.txt.html();
+                console.log(body, 'body')
+
+                $.ajax({
+                    url: "/admin/news",
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    data:JSON.stringify(body),
+                    success:function (result) {
+                        alert("修改成功");
+                        window.location.href="/admin/news/list.html"
+                    }
+                })
+                // console.log(editor.txt.html(),'获取的网络内容')
+            })
+
+            // 监听一级分类点击事件
+            let _categoryName = ""
+            form.on('radio', function (e) {
+
+            });
+
+            function reloadCategory(form){
+                $.ajax({
+                    url: "/admin/news/category",
+                    type: "get",
+                    contentType: "application/json; charset=utf-8",
+                    success:function (result) {
+                        var HTML=  "";
+                        var Option = "<option value='-1'>-- 选择父类 --</option>";
+                        result.forEach(function(v){
+                            // HTML += '<input type="radio" name="category"  value="' + v.id + '" title="'+ v.name +'" lay-skin="primary">';
+
+                            HTML +='<option value="'+ v.id +'">' + v.name +'</option>';
+                            if(v.children && v.children.length>0 ){
+                                v.children.forEach(function(k){
+                                    HTML +='<option value="'+ k.id +'">' + '&nbsp;&nbsp;&nbsp;&nbsp' +  k.name +'</option>';
+                                })
+                            }
+                            // Option +='<option class="level-0"  value="' + v.id + '>"' + v.name +'</option>';
+                            if(v.parentId == -1){
+                                Option +='<option value="'+ v.id +'">' + v.name +'</option>';
+                            }
+                        });
+                        // console.log(Option,'Option')
+                        HTML = '<select name="category" >' + HTML +   '</select>';
+                        $('#catetory').html(HTML);
+                        timeCount++;
+                        if(timeCount<=1){
+                            $('#catetory [name="category"]').val(initData.category.id);
+                        }
+                        Option = '<select name="newcategory_parent_" id="newcategory_parent">' + Option +   '</select>'
+                        $('#newcategory_dom').html(Option);
+                        form.render();
+                        // <input type="radio" name="category" value="1" title="分类1" lay-skin="primary">
+                        //     console.log(result,'result')
+                    }
+                })
+            }
+
+            function addCategory() {
+                const categoryName = $("#newcategory").val();
+                const parentId = $("#newcategory_parent").val();
+                $.ajax({
+                    url: "/admin/news/category",
+                    type: "post",
+                    contentType: "application/json; charset=utf-8",
+                    data:JSON.stringify({
+                        name:categoryName,
+                        parentId:parentId
+                    }),
+                    success:function (result) {
+                        reloadCategory(form);
+                        $('#category-add').toggle();
+                        //todo  reload category
+                    }
+                })
+            }
+
+
+        });
+
+
+    })
+
+
+</script>
+
+</html>
