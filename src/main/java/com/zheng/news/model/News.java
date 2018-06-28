@@ -24,6 +24,8 @@ public class News {
 
     private ZonedDateTime createdAt;
 
+    private String source;
+
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(NO_CONSTRAINT))
     private NewsCategory category;
@@ -76,5 +78,13 @@ public class News {
 
     public void setStatus(NewsStatus status) {
         this.status = status;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }
