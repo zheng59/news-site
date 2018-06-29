@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>文字链接.html</title>
+    <title>图片链接</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <link href="/layui/css/layui.css" rel="stylesheet" media="screen">
@@ -13,6 +13,17 @@
     <script src="/js/jquery.js"></script>
     <script src="/layui/layui.js"></script>
     <script src="/wangEditor/wangEditor.js"></script>
+    <style>
+        .thud {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .thud img {
+            width: 500px;
+            height: 200px;
+        }
+    </style>
 </head>
 
 
@@ -38,7 +49,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">文章</a>
                     <dl class="layui-nav-child">
@@ -53,12 +64,12 @@
                         <dd><a href="/admin/settings/slideshow/list.html">幻灯片设置</a></dd>
                         <dd><a href="/admin/settings/slideshow/edit.html">添加幻灯片</a></dd>
                         <dd><a href="/admin/admission/list.html">证件列表</a></dd>
-                        <dd  class="layui-this" ><a href="/admin/admission/edit.html">添加证件</a></dd>
+                        <dd><a href="/admin/admission/edit.html">添加证件</a></dd>
                         <dd><a href="/admin/link/text.html">文字链接</a></dd>
-                        <dd><a href="/admin/link/image.html">图片链接</a></dd>
+                        <dd  class="layui-this"><a href="/admin/link/image.html">图片链接</a></dd>
                         <dd><a href="/admin/contact.html">联系我们</a></dd>
                         <dd><a href="/admin/notice/list.html">公告列表</a></dd>
-                        <dd><a href="/admin/notice/add.html">添加公告</a></dd>
+                        <dd class="layui-this"><a href="/admin/notice/add.html">添加公告</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -68,89 +79,96 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h3>证件号管理</h3>
+            <h3>图片链接管理</h3>
             <hr class="layui-bg-red">
             <hr class="layui-bg-red">
 
-                <div class="layui-container">
-                    <div class="layui-row mt-10">
-                        <div class="layui-col-md3">
-                             图片
-                        </div>
-                        <div class="layui-col-md3 thud" id="thud">
+            <div class="layui-container">
 
-                        </div>
-                        <div class="layui-col-md3">
-                            <button type="button" class="layui-btn" id="test1">
-                                <i class="layui-icon">&#xe67c;</i>上传图片
-                            </button>
-                        </div>
-                    </div>
+                <div class="thud" id="thud">
 
-                    <div class="layui-row mt-10">
-                        <div class="layui-col-md3">
-                            证件号
-                        </div>
-                        <div class="layui-col-md6">
-                            <input id="word" type="text" class="layui-input">
-                        </div>
+                </div>
+
+                <div class="layui-row mt-10">
+
+                    <div class="layui-col-md3">
+                        图片
                     </div>
-                    <div class="text-center mt-10"><button class="layui-btn" id="btn-add">添加</button></div>
+                    <div class="layui-col-md3">
+                        <button type="button" class="layui-btn" id="test1">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                    </div>
+                </div>
+                <div class="layui-row mt-10">
+                    <div class="layui-col-md3">
+                        链接
+                    </div>
+                    <div class="layui-col-md6">
+                        <input id="url" type="text" class="layui-input">
+                    </div>
+                </div>
+                <div class="text-center mt-10">
+                    <button class="layui-btn" id="btn-add">添加</button>
+                </div>
             </div>
 
-    </div>
+        </div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
     </div>
-</div>
 </div>
 </body>
 <script>
-    $(function(){
+    $(function () {
         var form = null
-        layui.use(['layer', 'form','element','laypage','upload'], function(){
+        layui.use(['layer', 'form', 'element', 'laypage', 'upload'], function () {
             var layer = layui.layer
-                ,form = layui.form;
+                , form = layui.form;
             var element = layui.element;
             var upload = layui.upload;
             var laypage = layui.laypage;
             var imageBase64 = "";
-            var id ="";
-            if(window.location.search && window.location.search.split('=') ){
-                id = window.location.search.split('=')[1];
-                $('#location').show();
-                $.ajax({
-                    url: "/admin/admission/" + id,
-                    type: "get",
-                    contentType: "application/json; charset=utf-8",
-                    async:false,
-                    success:function (result) {
-                        // initData = result;
-                        $('.thud').html('<img src="' + result.base64 + '"/>');
-                        imageBase64=result.base64;
-                        $('#word').val(result.cardNumber);
+            var id = "";
+
+            $.ajax({
+                url: "/admin/link/image",
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (result) {
+                    // initData = result;
+                    console.log(result, 'result')
+                    if (result) {
+                        $('.thud').html('<img src="' + result.base64Image + '"/>');
+                        imageBase64 = result.base64Image;
+                        $('#word').val(result.text);
+                        $('#url').val(result.url);
+                        $('#location input').val(result.location);
                         $('#btn-add').html('保存');
                     }
-                })
-            }
+                }
+            })
+
 
             upload.render({
                 elem: '#test1'
-                ,url: '/api/upload/'
-                ,auto: false //选择文件后不自动上传
-                ,bindAction: '#testListAction' //指向一个按钮触发上传
-                ,choose: function(obj){
+                , url: '/api/upload/'
+                , auto: false //选择文件后不自动上传
+                , bindAction: '#testListAction' //指向一个按钮触发上传
+                , choose: function (obj) {
                     //将每次选择的文件追加到文件队列
                     var files = obj.pushFile();
 
                     //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
-                    obj.preview(function(index, file, result){
+                    obj.preview(function (index, file, result) {
                         // console.log(index); //得到文件索引
                         // console.log(file); //得到文件对象
-                        // console.log(result); //得到文件base64编码，比如图片
-                        imageBase64=result;
+                        console.log(result); //得到文件base64编码，比如图片
+                        imageBase64 = result;
                         $('.thud').html('<img src="' + imageBase64 + '"/>')
                     });
                 }
@@ -158,52 +176,61 @@
 
 
             // 添加url，关键词
-            $('#btn-add').on('click',function () {
-                var word = $('#word').val().trim();
+            $('#btn-add').on('click', function () {
+                // var word = $('#word').val().trim();
+                var url = $('#url').val().trim();
                 var base64Image = imageBase64;
-                if( !word || !imageBase64){
-                    layer.msg('证件号或图片不能为空');
+                if (!url || !imageBase64) {
+                    layer.msg('图片或url不能为空');
                     return;
                 }
-                if(id){
+                if (id) {
                     let body = {
-                        cardNumber:word,
-                        base64:base64Image,
-                        id:id,
+                        // id:id,
+                        // text:word,
+                        id: id,
+                        url: url,
+                        base64Image: base64Image,
+                        // location:$('#location').val().trim()
                     }
-                    if(body.location){
+                    if (body.location) {
                         layer.msg('排序id不能为空');
                         return;
                     }
                     $.ajax({
-                        url: "/admin/admission/",
+                        url: "/admin/link/image",
                         type: "post",
                         contentType: "application/json; charset=utf-8",
-                        data:JSON.stringify(body),
-                        success:function (result) {
+                        data: JSON.stringify(body),
+                        success: function (result) {
                             layer.msg('修改成功');
-                            window.location.href="/admin/admission/list.html"
+                            window.location.reload()
+                            // window.location.href="/admin/settings/slideshow/list.html"
                         },
-                        error:function (error) {
-                            layer.msg('修改失败');
+                        error: function (error) {
+                            layer.msg('添加失败');
                         }
                     })
+
                     return;
                 }
-                let body = {
-                    cardNumber:word,
-                    base64:base64Image
+                var body = {
+                    url: url,
+                    base64Image: base64Image
                 }
                 $.ajax({
-                    url: "/admin/admission/",
+                    url: "/admin/link/image",
                     type: "post",
                     contentType: "application/json; charset=utf-8",
-                    data:JSON.stringify(body),
-                    success:function (result) {
+                    data: JSON.stringify(body),
+                    success: function (result) {
                         layer.msg('添加成功');
-                        window.location.href="/admin/admission/list.html"
+                        window.location.reload()
+                        // $('#new-url').val("");
+                        // $('#new-word').val("");
+                        // feachData()
                     },
-                    error:function (error) {
+                    error: function (error) {
                         layer.msg('添加失败');
                     }
                 })

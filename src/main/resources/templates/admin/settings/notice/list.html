@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>文字链接.html</title>
+    <title>文章列表.html</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <link href="/layui/css/layui.css" rel="stylesheet" media="screen">
@@ -19,18 +19,8 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">layui 后台布局</div>
+        <div class="layui-logo">网站后台</div>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
             <li class="layui-nav-item"><a href="/logout">退出</a></li>
         </ul>
     </div>
@@ -42,9 +32,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">文章</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="/admin/news/list.html">所有文章</a></dd>
+                        <dd class="layui-this" ><a href="/admin/news/list.html">所有文章</a></dd>
                         <dd><a href="/admin/news/add.html">添加文章</a></dd>
-                        <dd><a href="/admin/link/text.html">分类目录</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
@@ -52,12 +41,12 @@
                     <dl class="layui-nav-child">
                         <dd><a href="/admin/settings/slideshow/list.html">幻灯片设置</a></dd>
                         <dd><a href="/admin/settings/slideshow/edit.html">添加幻灯片</a></dd>
-                        <dd  class="layui-this" ><a href="/admin/admission/list.html">证件列表</a></dd>
+                        <dd><a href="/admin/admission/list.html">证件列表</a></dd>
                         <dd><a href="/admin/admission/edit.html">添加证件</a></dd>
                         <dd><a href="/admin/link/text.html">文字链接</a></dd>
                         <dd><a href="/admin/link/image.html">图片链接</a></dd>
                         <dd><a href="/admin/contact.html">联系我们</a></dd>
-                        <dd><a href="/admin/notice/list.html">公告列表</a></dd>
+                        <dd class="layui-this"><a href="/admin/notice/list.html">公告列表</a></dd>
                         <dd><a href="/admin/notice/add.html">添加公告</a></dd>
                     </dl>
                 </li>
@@ -68,28 +57,28 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h3>证件管理</h3>
+            <h3>通知</h3>
             <hr class="layui-bg-red">
-            <a class="layui-btn" href="/admin/admission/edit.html">添加<a/>
-            <hr class="layui-bg-red" >
-            <div class="layui-col-md12">
-                <table class="layui-table">
-                    <thead>
-                    <tr>
-                        <th>证件号</th>
-                        <th>图片</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="content">
+                 <a class="layui-btn" href="/admin/notice/add.html">添加通知</a>
+            <hr class="layui-bg-red">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>状态</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="list">
 
-                    </tbody>
-                </table>
-                <div class="text-right">
-                    <div id="paganation">
-                    </div>
+                </tbody>
+            </table>
+            <div class="text-right">
+                <div id="paganation">
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -97,7 +86,6 @@
         <!-- 底部固定区域 -->
         © layui.com - 底部固定区域
     </div>
-</div>
 </div>
 </body>
 <script>
@@ -113,25 +101,23 @@
 
             function feachData(page,size){
                 var page = page || 0;
-                var size = size || 5;
+                var size = size || 10;
                 $.ajax({
-                    url: "/admin/admission?page="+page+"&size="+size ,
+                    url: "/admin/notice?page="+page+"&size="+size ,
                     type: "get",
                     contentType: "application/json; charset=utf-8",
                     data:{},
                     success:function (result) {
-                        if( result.content && result.content.length>0  ){
+                        if( result.content && result.content.length>0 ){
                             var _html = "";
                             result.content.forEach(function (v) {
-                                _html+= '<tr>'
-                                    + '<td> '+ v.cardNumber+ '</td>'
-                                    + '<td class="thud"><img src="' + v.base64 +'"> '+ '</td>'
-                                    +  '<td>'
-                                     +' <a href="/admin/admission/edit.html?id=' + v.id + '" class="layui-btn mr-20">编辑</a>'
-                                    + '<button data-id="' + v.id + '" class="layui-btn layui-btn-danger btn-delete">删除</button></td>'
-                                +'</tr>'
+                                _html+= '<tr>' + '<td> '+ v.title+ '</td>'  +  '<td> '+ (v.status=='PUBLISHED' ?'发布' :'草稿')+ ' </td>'
+                                    + '<td> '+ v.createdAt + '</td>'
+                                    +  '<td><button data-id="'+ v.id + '" class="layui-btn layui-btn-primary btn-edit" >编辑</button>  <button data-id="' + v.id + '" class="layui-btn layui-btn-danger btn-delete">删除</button></td>'
+                                +  '</tr>'
                             })
-                            $('#content').html(_html)
+                            $('#list').html(_html)
+                            goEdit();
                             goDelete()
                             laypage.render({
                                 limit:size,
@@ -149,39 +135,39 @@
                                     }
                                 }
                             });
-
                         }else{
-                            $('#content').html('<tr style="text-align: center;"> <td colspan="5">无数据</td></tr>')
+                            $('#list').html('<tr style="text-align: center;"> <td colspan="4">无数据</td></tr>')
                         }
 
                     }
                 })
             }
 
-
-            // laypage.render({
-            //     elem: 'paganation' //注意，这里的 test1 是 ID，不用加 # 号
-            //     ,count: 50 //数据总数，从服务端得到
-            // });
-            // 删除文章确认
+            function goEdit(){
+                let $btn = $('.btn-edit');
+                $btn.on('click',function () {
+                    var id = $(this).data('id')
+                    window.location.href="/admin/notice/edit.html?id="+id;
+                })
+            }
 
             function goDelete(){
                 var $btn = $('.btn-delete');
                 $btn.on('click',function () {
-                    var id = $(this).data('id')
-                    // console.log(id);
+                    var id = $(this).data('id');
+                    // console.log(id,'id')
                     layer.open({
                         content: '确认删除么'
                         ,btn: ['确认','取消']
                         ,yes: function(index, layero){
                             $.ajax({
-                                url: "/admin/admission/"+id ,
+                                url: "/admin/notice/"+id,
                                 type: "delete",
                                 contentType: "application/json; charset=utf-8",
                                 data:{},
                                 success:function (result) {
                                     layer.msg('删除成功');
-                                    feachData();
+                                    feachData()
                                 }
                             })
                         }
@@ -193,33 +179,6 @@
                 })
             }
 
-
-            // 添加url，关键词
-            $('#btn-add').on('click',function () {
-                var word = $('#new-url').val().trim();
-                var url =  $('#new-word').val().trim();
-                if(!word || !url ){
-                    layer.msg('关键词或url不能为空');
-                    return;
-                }
-                let body = {
-                    text:word,
-                    url:url
-                }
-                $.ajax({
-                    url: "/admin/link/text" ,
-                    type: "post",
-                    contentType: "application/json; charset=utf-8",
-                    data:JSON.stringify(body),
-                    success:function (result) {
-                        layer.msg('添加成功');
-                        $('#new-url').val("");
-                        $('#new-word').val("");
-                        feachData()
-                    }
-                })
-
-            })
 
         });
 

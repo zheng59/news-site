@@ -26,6 +26,9 @@ public class CategoryManagerController {
 
     @PostMapping
     public ResponseEntity<NewsCategory> create(@RequestBody NewsCategory category) {
+        if (category.getParentId() == null) {
+            category.setParentId(NewsCategory.TOP_CATEGORY);
+        }
         return ResponseEntity.ok(newsCategoryService.create(category)) ;
     }
 

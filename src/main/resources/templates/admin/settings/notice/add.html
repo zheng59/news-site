@@ -33,7 +33,7 @@
                     <a class="" href="javascript:;">文章</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/admin/news/list.html">所有文章</a></dd>
-                        <dd class="layui-this"><a href="/admin/news/add.html">添加文章</a></dd>
+                        <dd ><a href="/admin/news/add.html">添加文章</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
@@ -47,7 +47,7 @@
                         <dd><a href="/admin/link/image.html">图片链接</a></dd>
                         <dd><a href="/admin/contact.html">联系我们</a></dd>
                         <dd><a href="/admin/notice/list.html">公告列表</a></dd>
-                        <dd><a href="/admin/notice/add.html">添加公告</a></dd>
+                        <dd class="layui-this"><a href="/admin/notice/add.html">添加公告</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -57,7 +57,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h3>文章添加</h3>
+            <h3>通知添加</h3>
             <hr class="layui-bg-red">
             <div class="layui-form">
                 <div class="layui-form-item">
@@ -82,34 +82,6 @@
                         <div class="layui-input-inline">
                             <input type="text" name="source" class="layui-input" title="来源">
                         </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">分类</label>
-                        <div class="">
-                            <div style="display: inline-block" class="category-parant layui-input-inline" id="catetory">
-
-                            </div>
-                            <a href="##" class="toggle-add-category ml-20"> + 添加新分类目录</a>
-                        </div>
-                        <div>
-                            <div id="category-add" class="category-add-detail" style="display: none">
-                                <input type="text" name="newcategory" id="newcategory" class="layui-input mb-10"
-                                       placeholder="请输入分类名">
-                                <div id="newcategory_dom">
-
-                                </div>
-                                <button class="layui-btn mt-10 mb-10" id="addCategoryBtn">添加新分类目录</button>
-                            </div>
-                        </div>
-                        <!--显示二级分类地址-->
-                        <!--<div>-->
-                        <!--<section class="category-two" style="display: none;">-->
-                        <!--<input type="radio" name="category-two" value="1" tit   le="二级分类" lay-skin="primary">-->
-                        <!--<input type="radio" name="category-two" value="2" title="二级分类" lay-skin="primary">-->
-                        <!--</section>-->
-                        <!--</div>-->
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
@@ -176,22 +148,22 @@
                 let body = {};
                 body.title = $('#title').val();
                 body.status = $('[name=status]:checked').val();
-                if ($('[name=category]').val()) {
-                    body.category = {};
-                    body.category.id = $('[name=category]').val();
-                }
+                // if ($('[name=category]').val()) {
+                //     body.category = {};
+                //     body.category.id = $('[name=category]').val();
+                // }
                 body.content = editor.txt.html();
                 body.source =  $('[name=source]').val()
                 console.log(body, 'body')
 
                 $.ajax({
-                    url: "/admin/news",
+                    url: "/admin/notice",
                     type: "post",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(body),
                     success: function (result) {
                         alert("添加成功");
-                        window.location.href = "/admin/news/list.html"
+                        window.location.href = "/admin/notice/list.html"
                     }
                 })
                 // console.log(editor.txt.html(),'获取的网络内容')

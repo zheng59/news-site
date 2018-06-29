@@ -44,6 +44,10 @@
                         <dd><a href="/admin/admission/list.html">证件列表</a></dd>
                         <dd><a href="/admin/admission/edit.html">添加证件</a></dd>
                         <dd><a href="/admin/link/text.html">文字链接</a></dd>
+                        <dd><a href="/admin/link/image.html">图片链接</a></dd>
+                        <dd><a href="/admin/contact.html">联系我们</a></dd>
+                        <dd><a href="/admin/notice/list.html">公告列表</a></dd>
+                        <dd><a href="/admin/notice/add.html">添加公告</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -107,7 +111,7 @@
                             result.content.forEach(function (v) {
                                 _html+= '<tr>' + '<td> '+ v.title+ '</td>'  +  '<td> '+ (v.category ?  v.category.name : "")+ ' </td>'
                                     + '<td> '+ v.createdAt + '</td>'
-                                    +  '<td><button data-id="' + v.id +'" class="layui-btn layui-btn-primary btn-edit" >编辑</button>  <button data-id=" + v.id +" class="layui-btn layui-btn-danger btn-delete">删除</button></td>'
+                                    +  '<td><button data-id="' + v.id +'" class="layui-btn layui-btn-primary btn-edit" >编辑</button>  <button data-id="' + v.id + '" class="layui-btn layui-btn-danger btn-delete">删除</button></td>'
                                 +  '</tr>'
                             })
                             $('#list').html(_html)
@@ -129,6 +133,8 @@
                                     }
                                 }
                             });
+                        }else {
+                            $('#list').html('<tr style="text-align: center;"> <td colspan="4">无数据</td></tr>')
                         }
 
                     }
@@ -153,10 +159,11 @@
                         ,yes: function(index, layero){
                             $.ajax({
                                 url: "/admin/news/"+id ,
-                                type: "get",
+                                type: "delete",
                                 contentType: "application/json; charset=utf-8",
                                 data:{},
                                 success:function (result) {
+                                    layer.msg('删除成功');
                                     feachData()
                                 }
                             })

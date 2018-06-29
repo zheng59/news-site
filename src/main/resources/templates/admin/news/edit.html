@@ -45,6 +45,10 @@
                         <dd><a href="/admin/admission/list.html">证件列表</a></dd>
                         <dd><a href="/admin/admission/edit.html">添加证件</a></dd>
                         <dd><a href="/admin/link/text.html">文字链接</a></dd>
+                        <dd><a href="/admin/link/image.html">图片链接</a></dd>
+                        <dd><a href="/admin/contact.html">联系我们</a></dd>
+                        <dd><a href="/admin/notice/list.html">公告列表</a></dd>
+                        <dd><a href="/admin/notice/add.html">添加公告</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -54,7 +58,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <h3>文章添加</h3>
+            <h3>文章编辑</h3>
             <hr class="layui-bg-red">
             <div class="layui-form">
                 <div class="layui-form-item">
@@ -70,14 +74,6 @@
                         <div class="layui-input-block">
                             <input type="radio" name="status" value="DRAFT" title="草稿">
                             <input type="radio" name="status" value="PUBLISHED" title="发布">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">来源</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="source" class="layui-input" title="来源">
                         </div>
                     </div>
                 </div>
@@ -166,6 +162,7 @@
                     initData = result;
                     $('#title').val(initData.title || 0);
                     $('[name=status]').filter('[value=' + initData.status +']').prop('checked', true);
+                    $('[name=source]').val(initData.source)
                     // console.log(result,'resultresultresult====')
                 }
             })
@@ -205,10 +202,13 @@
             $('#sumbit').on('click', function (e) {
                 e.preventDefault();
                 let body = {};
+                body.id = id;
                 body.title = $('#title').val();
                 body.status = $('[name=status]:checked').val();
-                body.category={}
-                body.category.id = $('[name=category]').val();
+                if ($('[name=category]').val()) {
+                    body.category = {};
+                    body.category.id = $('[name=category]').val();
+                }
                 body.content = editor.txt.html();
                 body.source = $('[name=source]').val();
                 console.log(body, 'body')
@@ -259,7 +259,9 @@
                         $('#catetory').html(HTML);
                         timeCount++;
                         if(timeCount<=1){
-                            $('#catetory [name="category"]').val(initData.category.id);
+                            if(initData.category && initData.category.id ){
+                                $('#catetory [name="category"]').val(initData.category.id);
+                            }
                         }
                         Option = '<select name="newcategory_parent_" id="newcategory_parent">' + Option +   '</select>'
                         $('#newcategory_dom').html(Option);

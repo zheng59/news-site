@@ -74,4 +74,10 @@ public class NewsManagerController {
     public ResponseEntity<News> find(@PathVariable("id") Integer id) {
         return newsService.find(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<News> delete(@PathVariable("id") Integer id) {
+        newsService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
