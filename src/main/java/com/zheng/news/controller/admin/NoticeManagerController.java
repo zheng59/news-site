@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 /**
  * NoticeManagerController
@@ -47,7 +48,7 @@ public class NoticeManagerController {
 
     @PostMapping("/notice")
     public ResponseEntity<Notice> create(@RequestBody Notice notice) {
-        notice.setCreatedAt(ZonedDateTime.now());
+        notice.setCreatedAt(new Date());
         return ResponseEntity.ok(noticeRepository.save(notice));
     }
 

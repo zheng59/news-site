@@ -10,10 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * NewsService
@@ -34,7 +31,7 @@ public class NewsService {
                 .map(NewsCategory::getId)
                 .map(it -> newsCategoryRepository.findById(it).orElse(null)).orElse(null);
         news.setCategory(category);
-        news.setCreatedAt(ZonedDateTime.now());
+        news.setCreatedAt(new Date());
         return newsRepository.save(news);
     }
 
@@ -55,5 +52,17 @@ public class NewsService {
                 newsRepository.findAllByCategoryId(categoryId, pageable)
                 :newsRepository.findAll(pageable);
     }
+
+    public Page<News> findByCategoryId(Integer categoryId, Pageable pageable) {
+        Optional<NewsCategory> newsCategory = newsCategoryRepository.findById(categoryId);
+        if (newsCategory.map(NewsCategory::getParentId).orElse(0).equals(NewsCategory.TOP_CATEGORY)) {
+            List<NewsCategory> newsCategories = newsCategoryRepository.findAllByParentId(categoryId);
+            newsCategories.add(newsCategoryRepository.findById(categoryId).get());
+            return newsRepository.findAllByCategoryIn(newsCategories,pageable);
+        }else {
+            return query(categoryId, pageable);
+        }
+    }
+
 
 }

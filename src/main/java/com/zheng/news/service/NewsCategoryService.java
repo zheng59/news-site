@@ -31,6 +31,10 @@ public class NewsCategoryService {
         return newsCategoryRepository.save(newsCategory);
     }
 
+    public NewsCategory find(Integer id) {
+        return newsCategoryRepository.findById(id).orElse(new NewsCategory());
+    }
+
     public NewsCategory update(NewsCategory example) {
         return newsCategoryRepository.save(example);
     }

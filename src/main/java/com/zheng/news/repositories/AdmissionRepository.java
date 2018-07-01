@@ -11,5 +11,5 @@ import java.util.List;
  **/
 public interface AdmissionRepository extends JpaRepository<Admission,Integer> {
 
-    List<Admission> findByCardNumber(String cardNumber);
+    Admission findByCardNumber(String cardNumber);
 }

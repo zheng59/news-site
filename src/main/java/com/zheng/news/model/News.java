@@ -3,6 +3,7 @@ package com.zheng.news.model;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 import static javax.persistence.ConstraintMode.NO_CONSTRAINT;
 
@@ -22,7 +23,7 @@ public class News {
     @Lob
     private String content;
 
-    private ZonedDateTime createdAt;
+    private Date createdAt;
 
     private String source;
 
@@ -56,11 +57,11 @@ public class News {
         this.content = content;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(ZonedDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

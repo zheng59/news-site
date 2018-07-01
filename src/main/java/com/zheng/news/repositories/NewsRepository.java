@@ -19,4 +19,6 @@ public interface NewsRepository extends JpaRepository<News,Integer> {
 
     void deleteByCategoryId(Integer newsCategoryId);
 
+    Page<News> findAllByCategoryIn(List<NewsCategory> newsCategories, Pageable pageable);
+
 }

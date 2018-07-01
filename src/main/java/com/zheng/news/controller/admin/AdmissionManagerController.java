@@ -42,7 +42,7 @@ public class AdmissionManagerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Admission> create(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<Admission> delete(@PathVariable(name = "id") Integer id) {
         imageRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

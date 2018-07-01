@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ImageLinkService
@@ -27,7 +28,19 @@ public class ImageLinkService {
         }
     }
 
+    public Optional<ImageLink> find(Integer id) {
+        return imageLinkRepository.findById(id);
+    }
+
+    public List<ImageLink> findAll() {
+        return imageLinkRepository.findAll();
+    }
+
     public ImageLink save(ImageLink imageLink) {
         return imageLinkRepository.save(imageLink);
+    }
+
+    public void delete(Integer id) {
+        imageLinkRepository.deleteById(id);
     }
 }
