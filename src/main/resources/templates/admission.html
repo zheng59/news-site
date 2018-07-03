@@ -1,9 +1,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:if="admission">
+<th:block th:if="${admission}">
     <image th:src="${admission.base64}"/>
 </th:block>
 
-<th:block th:if="admission">
+<th:block th:unless="${admission}">
     <p> 没有找到相关图片</p>
 </th:block>
 

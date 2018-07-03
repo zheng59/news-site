@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <title>首页</title>
@@ -8,39 +8,35 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/css/font-awesome.css" rel="stylesheet" media="screen">
     <link href="/swiper/css/swiper.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/common1.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/swiper/js/swiper.min.js"></script>
     <style>
 
-        .container {
+        .container{
             width: 1114px !important;
         }
-
-        .banner.container {
+        .banner.container{
             padding: 0;
         }
-
         .swiper-container {
             /*width: 600px;*/
             max-height: 400px;
         }
-
-        @media (min-width: 768px) {
+        @media (min-width: 768px){
             .w-610 {
                 width: 616px !important;
             }
         }
-
-        @media (min-width: 768px) {
+        @media (min-width: 768px){
             .w-862 {
                 width: 850px !important;
             }
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 768px){
             .w-846 {
                 width: 848px !important;
                 padding-left: 0px;
@@ -52,28 +48,13 @@
             width: 100%;
             display: block;
         }
-
-        .index-center-content .ul-content li time {
+        .index-center-content .ul-content li time{
             float: right;
             color: #bcbcbc;
             font-size: 14px;
             font-weight: bold;
         }
-        .index-center-content .ul-content li {
-            width: 100%;
-            display: block;
-            position: relative;
-        }
-        .index-center-content .ul-content li time{
-            position: absolute;
-            right: 0px;
-            color: #bcbcbc;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .index-center-content .ul-content li a{
-            width: 90%;
-        }
+
     </style>
 </head>
 
@@ -82,15 +63,16 @@
 <div id="app">
     <section class="header">
         <div class="container">
-            <div class="header-top text-left">
+            <div class="header-top text-center">
                 <img src="/imgs/logo.png" alt="">
             </div>
-            <ul class="nav-ul hidden-xs">
+            <ul class="nav-ul hidden-xs" >
                 <li class="active"><a href="##" class="bg-002 pl-6">首页</a></li>
-                <th:block th:each="category:${categoryList}">
-                    <li><a th:href="'/list.html?categoryId='+ ${category.id}" th:text="${category.name}"></a></li>
-                </th:block>
-
+                <li><a href="##">金融政策</a></li>
+                <li><a href="##">新闻中心</a></li>
+                <li><a href="##">特殊金融</a></li>
+                <li><a href="##">企业文化</a></li>
+                <li><a href="##">公司党建</a></li>
             </ul>
         </div>
     </section>
@@ -100,8 +82,11 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                <div class="swiper-slide" th:each="slideshow:${slideshows}">
-                    <a th:href="${slideshow.url}"  target="view_window"><img th:src="${slideshow.base64Image}" th:alt="${slideshow.text}"></a>
+                <div class="swiper-slide">
+                    <img src="/imgs/banner.png" alt="">
+                </div>
+                <div class="swiper-slide">
+                     <img src="/imgs/500519217.png" alt="">
                 </div>
             </div>
             <!-- If we need pagination -->
@@ -119,14 +104,26 @@
     <section class="index-content">
         <div class="container">
             <div class="row">
+                <!-- 左边内容 -->
                 <div class="col-sm-3 w-264 pd-0">
                     <section class="panel panel-green-1 panel-b-10">
                         <div class="panel-heading text-center bg-003">
                             公告栏
                         </div>
                         <div class="panel-body announce">
-                            <h4 class="announce-title" th:text="${notice?.title}"></h4>
-                            <div class="announce-content" th:utext="${notice?.content}">
+                            <h4 class="announce-title">公告公告公告公告公告公告</h4>
+                            <div class="announce-content">
+                                我说的是as是as发
+                                我说的是as是as发
+                                我说的是as是as发
+                                我说的是as是as发
+                                我说的是as是as发
+
+                                我说的是as是as发
+                                我说的是as是as发
+                                我说的是as是as发 我说的是as是as发
+                                我说的是as是as发
+
                             </div>
                         </div>
                     </section>
@@ -135,38 +132,41 @@
                             图文链接
                         </div>
                         <div class="panel-body">
-                            <th:block th:each="imageLink:${imageLinks}">
-                                <a th:href="${imageLink?.url}" target="view_window">
-                                    <img th:src="${imageLink?.base64Image}" alt="">
-                                </a>
-                            </th:block>
+                            <img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt=""><img src="../imgs/banner.png" alt="">
+                            <img src="../imgs/banner.png" alt="">
+
 
                         </div>
                     </section>
                 </div>
-                <div class="col-sm-9 w-846">
-                    <div class="col-sm-6 w-610">
-                        <section class="index-center-content ">
+                <!--右边内容-->
+                <div class="col-sm-9 w-846" >
+                    <div class="col-sm-6 w-610" >
+                        <section class="index-center-content " >
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs nav-tabs-1" role="tablist">
                                 <li role="presentation" class="active">
-                                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab"
-                                       th:text="${categoryList[0].name}"></a>
+                                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab">新闻中心</a>
                                 </li>
-                                <a class="more" th:href="'/list.html?categoryId='+ ${categoryList[0].id}">更多 >></a>
+                                <a class="more" href="##">更多 >></a>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="home">
                                     <ul class="ul-content">
-                                        <th:block th:each="news:${category1}">
-                                            <li>
-                                                <a th:href="'/news.html?id='+ ${news.id}">
-                                                    <d th:text="${news.title}"></d>
-                                                    <time class="" th:text="${#dates.format(news.createdAt, 'yyyy-MM')}"></time>
-                                                </a>
-                                            </li>
-                                        </th:block>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+
+
                                     </ul>
                                 </div>
                             </div>
@@ -175,23 +175,19 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs nav-tabs-1" role="tablist">
                                 <li role="presentation" class="active">
-                                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"
-                                       th:text="${categoryList[1].name}"></a>
+                                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">特色金融</a>
                                 </li>
-                                <a class="more" th:href="'/list.html?categoryId='+ ${categoryList[1].id}">更多 >></a>
+                                <a class="more" href="##">更多 >></a>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="profile">
                                     <ul class="ul-content">
-                                        <th:block th:each="news:${category2}">
-                                            <li>
-                                                <a th:href="'/news.html?id='+ ${news.id}">
-                                                    <d th:text="${news.title}"></d>
-                                                    <time class="" th:text="${#dates.format(news.createdAt, 'yyyy-MM')}"></time>
-                                                </a>
-                                            </li>
-                                        </th:block>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
+                                        <li><a href="##">赌球不小心======<time>2019-00</time> </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -201,65 +197,77 @@
                     <div class="col-sm-3 w-232 pd-0">
                         <section class="panel panel-primary panel-b-10">
                             <div class="panel-heading">
-                                <b th:text="${categoryList[2].name}"></b>
-                                <a class="more-1" th:href="'/list.html?categoryId='+ ${categoryList[2].id}">更多 >></a>
+                                <b>企业文化</b>
+                                <a class="more-1" href="##">更多 >></a>
                             </div>
-                            <div class="panel-body pt-0 pb-0">
-                                <ul class="ul-content party-content">
-                                    <th:block th:each="news:${category3}">
-                                        <li><a th:href="'/news.html?id='+${news.id}" th:text="${news.title}"></a></li>
-                                    </th:block>
-                                </ul>
+                            <div class="panel-body wh-content">
+                                <h5><b>公告</b></h5>
+                                <p1>我说的是as是as发，我说的是as是as发，我说的是as是as发，我说的是as是as发，我说的是as是as发，我说的是as是as发，</p1>
                             </div>
                         </section>
                         <section class="panel panel-default-1 panel-b-10">
                             <div class="panel-heading">
-                                <b th:text="${categoryList[3].name}"></b>
-                                <a class="more-2" th:href="'/list.html?categoryId='+ ${categoryList[3].id}">更多 >></a>
+                                <b>公司党建</b>
+                                <a class="more-2" href="##">更多 >></a>
                             </div>
                             <div class="panel-body pt-0 pb-0">
-                                <ul class="ul-content party-content">
-                                    <th:block th:each="news:${category4}">
-                                        <li><a th:href="'/news.html?id='+${news.id}" th:text="${news.title}"></a></li>
-                                    </th:block>
+                                <ul class="ul-content party-content" >
+                                    <li><a href="##">赌球不小心=====赌球不小心======赌球不小心======赌球不小心======赌球不小心=======</a></li>
+                                    <li><a href="##">赌球不小心======</a></li>
+                                    <li><a href="##">赌球不小心======</a></li>
+                                    <li><a href="##">赌球不小心======</a></li>
+                                    <li><a href="##">赌球不小心======</a></li>
                                 </ul>
                             </div>
                         </section>
                     </div>
+
+                    <!--// 搜索内容开始-->
                     <div class="col-sm-9 w-862" style="padding-right: 0px;">
                         <section class="panel panel-default-1 panel-big panel-b-10">
                             <div class="panel-heading pl-0">
                                 <span class="search-tip">搜 索</span>
                                 <div class="pull-right">
-                                    <input type="text" class="search-input" id="admission-search" placeholder="请输入关键词"/>
-                                    <button class="btn search-btn" onclick="searchAdmission()">搜 索 证 书</button>
+                                    <input type="text" class="search-input" placeholder="请输入关键词" />
+                                    <button class="btn search-btn">搜 索 证 书</button>
                                 </div>
 
                             </div>
                             <div class="panel-body">
                                 <div class="text-search mb-10">搜 索 说 明</div>
-                                <div class="text-dsc" th:text="${searchIntro}">
-
+                                <div class="text-dsc">
+                                    啰嗦是发是撒as福州大学金山
                                 </div>
                             </div>
                         </section>
                     </div>
+                    <!--搜索内容结束-->
                 </div>
+                <!--右边内容end-->
+
 
             </div>
-
 
         </div>
     </section>
 
     <!--// 友情链接-->
-    <section class="friend-link-parent">
+    <section class="friend-link-parent" >
         <div class="container">
             <!--<div class="row">-->
-            <!--<div class="col-md-3"></div>-->
+                <!--<div class="col-md-3"></div>-->
             <!--</div>-->
-            <ul class="friend-link" th:each="link:${textLinks}">
-                <li><a th:href="${link.url}" th:text="${link.text}" target="view_window"></a></li>
+            <ul class="friend-link">
+                <li class="on"><a href="#">福建省网络网络</a></li>
+                <li><a href="#">福建省网络福建省网络网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
+                <li><a href="#">福建省网络</a></li>
             </ul>
         </div>
     </section>
@@ -269,39 +277,41 @@
             <div class="row">
                 <div class="col-sm-3 col-lg-offset-2">
                     <div class="footer-item">
-                        <p><img src="/imgs/addr.png" alt="" th:text="'地址:'+${contact.address}"></p>
+                        <p><img src="./imgs/addr.png" alt="">地址：福建省福州市二罗</p>
                     </div>
                 </div>
                 <div class="col-sm-3 col-lg-offset-1">
                     <div class="footer-item">
-                        <p><img src="/imgs/mine.png" alt="" th:text="'联系人:'+${contact.name}"></p>
+                        <p><img src="./imgs/mine.png" alt="">联系人：林先生</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-3 col-lg-offset-2">
                     <div class="footer-item">
-                        <p><img src="/imgs/phone.png" alt="" th:text="'联系方式:'+${contact.phone}"></p>
+                        <p><img src="./imgs/phone.png" alt="">联系方式：899999999</p>
                     </div>
                 </div>
                 <div class="col-sm-3 col-lg-offset-1">
                     <div class="footer-item">
-                        <p><img src="/imgs/email.png" alt="" th:text="'电子邮箱:'+${contact.email}"></p>
+                        <p><img src="./imgs/email.png" alt="">电子邮箱：1377777@qq</p>
                     </div>
                 </div>
             </div>
 
             <div class="footer-copy text-center">
-                <p>版权信息@ 蚂蚁科技所有</p>
-                <p>版权信息@ 蚂蚁科技所有</p>
+                    <p>版权信息@ 蚂蚁科技所有</p>
+                    <p>版权信息@ 蚂蚁科技所有</p>
             </div>
-        </div>
+
+
+
     </footer>
 
 </div>
 </body>
 <script>
-    var mySwiper = new Swiper('.swiper-container', {
+    var mySwiper = new Swiper ('.swiper-container', {
         // Optional parameters
         loop: true,
 
@@ -321,11 +331,6 @@
         //     el: '.swiper-scrollbar',
         // },
     })
-
-    function searchAdmission() {
-        var cardNumber = $("#admission-search").val();
-        window.open("/admission.html?cardNumber=" + cardNumber)
-    }
 </script>
 
 </html>

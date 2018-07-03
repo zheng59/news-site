@@ -58,15 +58,16 @@ public class IndexController {
     public String index(Model model) {
         List<NewsCategory> categoryList = newsCategoryService.findAllByParentId(NewsCategory.TOP_CATEGORY);
         model.addAttribute("categoryList",categoryList);
-        model.addAttribute("category1", newsService.findByCategoryId(categoryList.get(0).getId(),PageRequest.of(0,10,Sort.Direction.DESC,"createdAt")).getContent());
-        model.addAttribute("category2", newsService.findByCategoryId(categoryList.get(1).getId(),PageRequest.of(0,10,Sort.Direction.DESC,"createdAt")).getContent());
-        model.addAttribute("category3", newsService.findByCategoryId(categoryList.get(2).getId(),PageRequest.of(0,5,Sort.Direction.DESC,"createdAt")).getContent());
-        model.addAttribute("category4", newsService.findByCategoryId(categoryList.get(3).getId(),PageRequest.of(0,5,Sort.Direction.DESC,"createdAt")).getContent());
+        model.addAttribute("category1", newsService.findByCategoryId(categoryList.get(0).getId(),PageRequest.of(0,6,Sort.Direction.DESC,"createdAt")).getContent());
+        model.addAttribute("category2", newsService.findByCategoryId(categoryList.get(1).getId(),PageRequest.of(0,6,Sort.Direction.DESC,"createdAt")).getContent());
+        model.addAttribute("category3", newsService.findByCategoryId(categoryList.get(2).getId(),PageRequest.of(0,6,Sort.Direction.DESC,"createdAt")).getContent());
+        model.addAttribute("category4", newsService.findByCategoryId(categoryList.get(3).getId(),PageRequest.of(0,6,Sort.Direction.DESC,"createdAt")).getContent());
         model.addAttribute("notice", noticeRepository.findTopByOrderByIdDesc());
         model.addAttribute("textLinks", textLinkService.findALl());
         model.addAttribute("imageLinks", imageLinkService.findAll());
         model.addAttribute("contact", contactRepository.findOne(Example.of(new Contact())).orElse(new Contact()));
         model.addAttribute("searchIntro", searchIntro);
+        model.addAttribute("slideshows", slideshowService.findAll());
         return "/index.html";
     }
 
@@ -151,5 +152,10 @@ public class IndexController {
         model.addAttribute("contact", contactRepository.findOne(Example.of(new Contact())).orElse(new Contact()));
         model.addAttribute("news",news);
         return "/notice.html";
+    }
+
+    @GetMapping("/index01.html")
+    public String index01() {
+        return "/index01.html";
     }
 }
